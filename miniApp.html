@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма заявки</title>
+    <!-- Подключаем официальный скрипт Telegram Mini Apps -->
+    <script src="https://telegram.org"></script>
+    <style>
+        body { font-family: sans-serif; background: var(--tg-theme-bg-color, #fff); color: var(--tg-theme-text-color, #000); padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--tg-theme-button-color, #2481cc); color: var(--tg-theme-button-text-color, #fff); border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h3>Оставить заявку</h3>
+    <form id="appForm">
+        <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" id="name" required placeholder="Иван">
+        </div>
+        <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" required placeholder="+7 (999) 000-00-00">
+        </div>
+        <div class="form-group">
+            <label for="comment">Суть обращения</label>
+            <textarea id="comment" rows="4" placeholder="Опишите вашу задачу..."></textarea>
+        </div>
+        <button type="submit">Отправить заявку</button>
+    </form>
+
+    <script>
+        // Инициализируем Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Расширяем на весь экран
+
+        document.getElementById('appForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Собираем данные из полей
+            const data = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                comment: document.getElementById('comment').value
+            };
+
+            // Отправляем JSON-строку обратно боту
+            tg.sendData(json.stringify(data));
+            
+            // Закрываем Mini App
+            tg.close();
+        });
+    </script>
+</body>
+</html>
